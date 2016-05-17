@@ -11,6 +11,11 @@ about the software, its performance or its conformity to any specification.
 */
 
 package telecom;
+
+import com.sun.jndi.ldap.Connection;
+
+import telecom.Customer;
+
 /**
  * The Billing aspect deals with... billing.
  * How much money did each connection cost?
@@ -37,6 +42,13 @@ public aspect Billing {
     after(Customer cust) returning (Connection conn):
         args(cust, ..) && call(Connection+.new(..)) {
         conn.payer = cust;
+        
+    }
+    
+    after(Customer cust2) returning (Connection conn2):
+    	args(cust2, ..) && call(Connection+.new(..)){
+    	
+    	conn2.payer = cust2;
     }
 
     /**

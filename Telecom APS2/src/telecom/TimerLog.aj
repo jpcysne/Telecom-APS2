@@ -12,6 +12,13 @@ about the software, its performance or its conformity to any specification.
 package telecom;
 
 public aspect TimerLog {
+	
+	before():getterCalls(){
+		System.out.println("Target: "+ thisJoinPoint.getTarget());
+		System.out.println("This: "+ thisJoinPoint.getThis());
+	}
+	
+	pointcut getterCalls(): call(* get*()) && target(Timer); && this(Timer);
 
     after(Timer t): target(t) && call(* Timer.start())  {
       System.err.println("Timer started: " + t.startTime);
